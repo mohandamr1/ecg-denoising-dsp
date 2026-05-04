@@ -1,7 +1,7 @@
 close all;
 clear;
 clc;
-data = readtable('C:/Users/Mega Store/Desktop/106_signals.csv');
+data = readtable('106');
 ecg = data.MLII;
 Fs = 360;
 N = 3600;
