@@ -173,6 +173,38 @@ ylabel('s[n]');
 grid on;
 
 
+
+
+[H1, w1] = freqz(bd1, ad1, 1024, Fs);
+[H2, w2] = freqz(bd2, ad2, 1024, Fs);
+[H3, w3] = freqz(bd3, ad3, 1024, Fs);
+
+% Magnitude Response
+figure;
+tiledlayout(1,3, 'Padding', 'loose', 'TileSpacing', 'loose');
+
+nexttile; plot(w1, 20*log10(abs(H1))); 
+title('HPF Magnitude'); xlabel('Hz'); ylabel('dB'); grid on;
+
+nexttile; plot(w2, 20*log10(abs(H2))); 
+title('Notch Magnitude'); xlabel('Hz'); ylabel('dB'); grid on;
+
+nexttile; plot(w3, 20*log10(abs(H3))); 
+title('LPF Magnitude'); xlabel('Hz'); ylabel('dB'); grid on;
+
+% Phase Response
+figure;
+tiledlayout(1,3, 'Padding', 'loose', 'TileSpacing', 'loose');
+
+nexttile; plot(w1, angle(H1)*(180/pi)); 
+title('HPF Phase'); xlabel('Hz'); ylabel('Degrees'); grid on;
+
+nexttile; plot(w2, angle(H2)*(180/pi)); 
+title('Notch Phase'); xlabel('Hz'); ylabel('Degrees'); grid on;
+
+nexttile; plot(w3, angle(H3)*(180/pi)); 
+title('LPF Phase'); xlabel('Hz'); ylabel('Degrees'); grid on;
+
 [gd1, w1] = grpdelay(bd1, ad1, 1024, Fs);
 [gd2, w2] = grpdelay(bd2, ad2, 1024, Fs);
 [gd3, w3] = grpdelay(bd3, ad3, 1024, Fs);
@@ -185,4 +217,5 @@ xlabel('Frequency (Hz)');
 ylabel('Group Delay (ms)');
 legend('HPF', 'Notch', 'LPF');
 xlim([0 150]);
+grid on;
 grid on;
