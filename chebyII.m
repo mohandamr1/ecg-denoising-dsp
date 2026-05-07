@@ -70,9 +70,9 @@ Bw2 = OmegaP2(2) - OmegaP2(1);             % bandwidth
 [num3,den3] = lp2lp(num3, den3, OmegaP3);  
 [bd3,ad3]   = bilinear(num3, den3, Fs);  
 
-ecg_hp    = filtfilt(bd1, ad1, ecg_segment);
-ecg_notch = filtfilt(bd2, ad2, ecg_hp);
-ecg_clean = filtfilt(bd3, ad3, ecg_notch);
+ecg_hp    = filter(bd1, ad1, ecg_segment);
+ecg_notch = filter(bd2, ad2, ecg_hp);
+ecg_clean = filter(bd3, ad3, ecg_notch);
 disp(N1);
 disp(N2);
 disp(N3);
@@ -191,3 +191,18 @@ title('Notch Phase'); xlabel('Hz'); ylabel('Degrees'); grid on;
 
 nexttile; plot(w3, angle(H3)*(180/pi)); 
 title('LPF Phase'); xlabel('Hz'); ylabel('Degrees'); grid on;
+
+
+[gd1, w1] = grpdelay(bd1, ad1, 1024, Fs);
+[gd2, w2] = grpdelay(bd2, ad2, 1024, Fs);
+[gd3, w3] = grpdelay(bd3, ad3, 1024, Fs);
+
+figure;
+plot(w1, gd1/Fs * 1000); hold on;
+plot(w2, gd2/Fs * 1000);
+plot(w3, gd3/Fs * 1000);
+xlabel('Frequency (Hz)');
+ylabel('Group Delay (ms)');
+legend('HPF', 'Notch', 'LPF');
+xlim([0 150]);
+grid on;
